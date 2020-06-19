@@ -1,0 +1,24 @@
+---
+env:
+  node: true
+  es6: true
+
+parser: babel-eslint
+
+plugins:
+  - import
+  - jest
+
+extends:
+  - plugin:prettier/recommended
+  - prettier
+  - eslint:recommended
+  - plugin:import/errors
+
+rules:
+  prettier/prettier: 'error'
+  no-console: 'warn'
+  no-unused-vars:
+    - error
+    - varsIgnorePattern: 'regeneratorRuntime'
+      argsIgnorePattern: '^_'
