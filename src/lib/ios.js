@@ -1,5 +1,6 @@
 const generateHeader = require("./header");
 const write = require("write");
+const path = require("path");
 
 const generateFilePath = (key) => {
   switch (key) {
@@ -15,12 +16,12 @@ const generateFilePath = (key) => {
   }
 };
 
-const generateFile = (array) => {
+const generateFile = (data, basePath) => {
   const header = generateHeader();
-  const languages = Object.keys(array[0]).filter((k) => k !== "key");
+  const languages = Object.keys(data[0]).filter((k) => k !== "key");
   const generators = languages.map((l) => {
-    const filepath = generateFilePath(l);
-    const content = array.reduce((result, next) => {
+    const filepath = path.join(basePath, generateFilePath(l));
+    const content = data.reduce((result, next) => {
       return result + `"${next.key}" = "${next[l]}";\n`;
     }, "");
     return write(filepath, `${header}\n${content}`);

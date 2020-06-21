@@ -12,8 +12,8 @@ const SCOPES = [
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = path.join(__dirname, '../../token.json');
-const Cridential_PATH = path.join(__dirname, '../../credentials.json');
+// const TOKEN_PATH = path.join(__dirname, '../../token.json');
+// const Cridential_PATH = path.join(__dirname, '../../credentials.json');
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -21,16 +21,17 @@ const Cridential_PATH = path.join(__dirname, '../../credentials.json');
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(credentials) {
+function authorize({destPath, credentials}) {
   const {client_secret, client_id, redirect_uris} = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
       client_id, client_secret, redirect_uris[0]);
+  const tokenPath = path.join(destPath, 'token.json');
 
   // Check if we have previously stored a token.
   return new Promise((resolve, reject) => {
-    fs.readFile(TOKEN_PATH, (err, token) => {
+    fs.readFile(tokenPath, (err, token) => {
       if (err) {
-        getAccessToken(oAuth2Client)
+        getAccessToken(oAuth2Client, tokenPath)
           .then(client => resolve(client))
           .catch(error => reject(error));
         return
@@ -47,7 +48,7 @@ function authorize(credentials) {
  * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
  * @param {getEventsCallback} callback The callback for the authorized client.
  */
-function getAccessToken(oAuth2Client) {
+function getAccessToken(oAuth2Client, tokenPath) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: SCOPES,
@@ -67,9 +68,9 @@ function getAccessToken(oAuth2Client) {
         }
         oAuth2Client.setCredentials(token);
         // Store the token to disk for later program executions
-        fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+        fs.writeFile(tokenPath, JSON.stringify(token), (err) => {
           if (err) return console.error(err);
-          console.log('Token stored to', TOKEN_PATH);
+          console.log('Token stored to', tokenPath);
         });
         resolve(oAuth2Client);
       });
@@ -78,15 +79,15 @@ function getAccessToken(oAuth2Client) {
 }
 
 // Load client secrets from a local file.
-const generateDrive = () => {
+const generateDrive = ({destPath, credentials}) => {
   return new Promise((resolve, reject) => {
-    fs.readFile(Cridential_PATH, (err, content) => {
+    fs.readFile(credentials, (err, content) => {
       if (err) {
         reject(err);
         return console.log('Error loading client secret file:', err); 
       }
       // Authorize a client with credentials, then call the Google Drive API.
-      authorize(JSON.parse(content)).then(client => {
+      authorize({destPath, credentials: JSON.parse(content)}).then(client => {
         const result = google.drive({version: 'v3', auth: client});
         resolve(result);
       }).catch(error => reject(error));
