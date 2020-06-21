@@ -14,6 +14,15 @@
     "start": "node src/index.js",
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },
+  "author": "Johnny Gu <johnny@wiredcraft.com> (https://github.com/jhonny-me)",
+  "homepage": "https://github.com/jhonny-me/multi-language-mobile",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jhonny-me/multi-language-mobile.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jhonny-me/multi-language-mobile/issues"
+  },
   "lint-staged": {
     "*.{json,css,md}": [
       "prettier --write",
