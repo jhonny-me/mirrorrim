@@ -1,5 +1,5 @@
-const { Command } = require('commander');
-const { version } = require('../package.json');
+const { Command } = require("commander");
+const { version } = require("../package.json");
 const csv = require("csv-parser");
 const fs = require("fs");
 const ios = require("./lib/ios");
@@ -12,34 +12,51 @@ const DEFAULT_OPTIONS = {
   inputPath: null,
   // google
   googleFileId: null,
-  googleCredential: './credentials.json',
+  googleCredential: "./credentials.json",
 
-  outputDir: './output',
-  platforms: ['ios', 'android'],
-  config: '.multi-language'
-}
-const PACKAGE_FILE = 'package.json';
-const PACKAGE_OPTIONS_KEY = 'multi-language';
+  outputDir: "./output",
+  platforms: ["ios", "android"],
+  config: ".multi-language",
+};
+const PACKAGE_FILE = "package.json";
+const PACKAGE_OPTIONS_KEY = "multi-language";
 
 const platformMap = {
-  'ios': ios,
-  'android': android
+  ios: ios,
+  android: android,
 };
 
 const collect = (value, previous) => {
   return previous.concat([value]);
-}
+};
 
 const getOptions = async (argv) => {
   const options = new Command()
-    .option('--output-dir <string>', `output file base directory, default: ${DEFAULT_OPTIONS.outputDir}`)
-    .option('--platforms <string>', `output platforms, default: ${DEFAULT_OPTIONS.platforms}`, collect, [])
+    .option(
+      "--output-dir <string>",
+      `output file base directory, default: ${DEFAULT_OPTIONS.outputDir}`
+    )
+    .option(
+      "--platforms <string>",
+      `output platforms, default: ${DEFAULT_OPTIONS.platforms}`,
+      collect,
+      []
+    )
     // .option('--downloader <string>', `downloader for input, default: ${DEFAULT_OPTIONS.downloader}`)
-    .option('--input-path <file>', `file for local csv input, default: ${DEFAULT_OPTIONS.inputPath}`)
-    .option('--google-file-id <string>', 'google file id, you can find it in the url')
-    .option('--google-credential <file>', `file for google credentials, default: ${DEFAULT_OPTIONS.googleCredential}`)
+    .option(
+      "--input-path <file>",
+      `file for local csv input, default: ${DEFAULT_OPTIONS.inputPath}`
+    )
+    .option(
+      "--google-file-id <string>",
+      "google file id, you can find it in the url"
+    )
+    .option(
+      "--google-credential <file>",
+      `file for google credentials, default: ${DEFAULT_OPTIONS.googleCredential}`
+    )
     .version(version)
-    .parse(argv)
+    .parse(argv);
 
   const pkg = await readJson(PACKAGE_FILE);
   const packageOptions = pkg ? pkg[PACKAGE_OPTIONS_KEY] : null;
@@ -49,9 +66,9 @@ const getOptions = async (argv) => {
     ...DEFAULT_OPTIONS,
     ...dotOptions,
     ...packageOptions,
-    ...options
-  }
-}
+    ...options,
+  };
+};
 
 const formatKey = (key) => {
   const removespace = key.replace(/[_ ]/, "&&&");
@@ -87,19 +104,19 @@ const run = async (argv) => {
   try {
     let path;
     if (options.inputPath) {
-      path = options.inputPath
+      path = options.inputPath;
     } else if (options.googleFileId) {
       path = await google.downloadCsv({
         destPath: options.outputDir,
         credentials: options.googleCredential,
-        fileId: options.googleFileId
-      })
+        fileId: options.googleFileId,
+      });
     } else {
       console.log(`Error: To run this app, you need one of these:
   - path to local csv with input-path param
   - google file id with google-file-id param
-        `)
-      process.exit()
+        `);
+      process.exit();
     }
     const array = await readFromCsv(path);
     const platforms = options.platforms;
@@ -114,5 +131,5 @@ const run = async (argv) => {
 };
 
 module.exports = {
-  run
-}
+  run,
+};
