@@ -2,6 +2,7 @@ const csv = require("csv-parser");
 const fs = require("fs");
 const ios = require("./lib/ios");
 const android = require("./lib/android");
+const google = require("./downloader/google");
 
 const generators = [ios, android];
 
@@ -34,8 +35,10 @@ const readFromCsv = (filepath) => {
 };
 
 const main = async (input) => {
-  const path = input || "./resources/test.csv";
+  // const path = input || "./resources/test.csv";
   try {
+    const path = await google.downloadCsv();
+    console.log(path);
     const array = await readFromCsv(path);
     for (var i = 0; i < generators.length; i++) {
       await generators[i].generateFile(array);

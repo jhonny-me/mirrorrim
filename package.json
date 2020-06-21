@@ -30,19 +30,20 @@
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "auto-changelog": "^2.0.0",
+    "babel-eslint": "^10.0.3",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "eslint": "^7.2.0",
-    "husky": "^4.2.5",
-    "prettier": "^2.0.5",
-    "jest": "^24.9.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^23.0.2",
     "eslint-plugin-prettier": "^3.1.1",
-    "babel-eslint": "^10.0.3",
-    "babel-plugin-transform-inline-environment-variables": "^0.4.3"
+    "husky": "^4.2.5",
+    "jest": "^24.9.0",
+    "prettier": "^2.0.5"
   },
   "dependencies": {
     "csv-parser": "^2.3.3",
+    "googleapis": "39",
     "write": "^2.0.0"
   }
 }
