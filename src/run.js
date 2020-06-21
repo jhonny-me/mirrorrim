@@ -61,6 +61,7 @@ const getOptions = async (argv) => {
   const pkg = await readJson(PACKAGE_FILE);
   const packageOptions = pkg ? pkg[PACKAGE_OPTIONS_KEY] : null;
   const dotOptions = await readJson(options.config || DEFAULT_OPTIONS.config);
+  if (!options.platforms.length) options.platforms = DEFAULT_OPTIONS.platforms;
 
   return {
     ...DEFAULT_OPTIONS,
