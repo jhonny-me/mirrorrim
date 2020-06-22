@@ -30,6 +30,18 @@ const collect = (value, previous) => {
   return previous.concat([value]);
 };
 
+const getArrayOption = (optionArray, key) => {
+  let value;
+  const notNullArray = optionArray.filter(o => o);
+  for (var i = 0; i < notNullArray.length; i++) {
+    const optionValue = notNullArray[i][key];
+    if (optionValue && optionValue.length) {
+      value = optionValue;
+    }
+  }
+  return value;
+}
+
 const getOptions = async (argv) => {
   const options = new Command()
     .option(
@@ -61,13 +73,14 @@ const getOptions = async (argv) => {
   const pkg = await readJson(PACKAGE_FILE);
   const packageOptions = pkg ? pkg[PACKAGE_OPTIONS_KEY] : null;
   const dotOptions = await readJson(options.config || DEFAULT_OPTIONS.config);
-  if (!options.platforms.length) options.platforms = DEFAULT_OPTIONS.platforms;
+  const platforms = getArrayOption([DEFAULT_OPTIONS, dotOptions, packageOptions, options], 'platforms');
 
   return {
     ...DEFAULT_OPTIONS,
     ...dotOptions,
     ...packageOptions,
     ...options,
+    platforms
   };
 };
 
