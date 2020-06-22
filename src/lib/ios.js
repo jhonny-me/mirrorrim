@@ -22,7 +22,8 @@ const generateFile = (data, basePath) => {
   const generators = languages.map((l) => {
     const filepath = path.join(basePath, generateFilePath(l));
     const content = data.reduce((result, next) => {
-      return result + `"${next.key}" = "${next[l]}";\n`;
+      const value = next[l].replace('%s', '%@');
+      return result + `"${next.key}" = "${value}";\n`;
     }, "");
     return write(filepath, `${header}\n${content}`);
   });
