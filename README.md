@@ -37,10 +37,10 @@ List of options:
 
 Let's say your wordings are kept at https://docs.google.com/spreadsheets/d/1Ik0mRByqVFldbAjDvrwGFx_CrM6-fsEKN0IzZnAr7rI/edit?usp=sharing
 
-You need to enable your google drive api at https://developers.google.com/drive/api/v3/quickstart/nodejs, make sure you enabled ![read access](https://www.googleapis.com/auth/drive.readonly) for the project you created on Google console. Download the credentials and rename it as `google-credential.json`
+You need to enable your google drive api at https://developers.google.com/drive/api/v3/quickstart/nodejs, make sure you enabled [read access](https://www.googleapis.com/auth/drive.readonly) for the project you created on Google console. Download the credentials and rename it as `google-credential.json`
 
 ### iOS
-After ![install](https://github.com/jhonny-me/multi-language-mobile#install) at your project root folder, add following section to your package.json
+After [install](https://github.com/jhonny-me/multi-language-mobile#install) at your project root folder, add following section to your package.json
 
 ```
 "multi-language": {
@@ -54,7 +54,7 @@ After ![install](https://github.com/jhonny-me/multi-language-mobile#install) at 
 And run `multi-language` at your project root folder. You can add the localization files from Xcode now.
 
 ### Android
-After ![install](https://github.com/jhonny-me/multi-language-mobile#install) at your project root folder, add following section to your package.json
+After [install](https://github.com/jhonny-me/multi-language-mobile#install) at your project root folder, add following section to your package.json
 
 ```
 "multi-language": {
