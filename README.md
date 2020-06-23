@@ -56,11 +56,13 @@ And run `multi-language` at your project root folder. You can add the localizati
 ##### What's More For iOS?
 You can combine it with [R.swift](https://github.com/mac-cain13/R.swift), then use `R.string.localizable.alert_ok()` for localized string.
 
-Wait... R.swift currently doesn't support in-app language switch well, but with this [extension](https://gist.github.com/jhonny-me/dd2edb43fb167d1f55f79021718507b7) https://gist.github.com/jhonny-me/dd2edb43fb167d1f55f79021718507b7  
+Wait... R.swift currently doesn't support in-app language switch well, but with this extension https://gist.github.com/jhonny-me/dd2edb43fb167d1f55f79021718507b7  
 
 you can do: `R.string.localizable.alert_ok.localized()`
 
 What about params? I got you covered: `R.string.localizable.count_number.localized().withInputs(2, 'piggets')`
+
+When you want to change language simply call `StringResource.language = "zh-Hans"`
 
 ### Android
 After [install](https://github.com/jhonny-me/multi-language-mobile#install) at your project root folder, add following section to your package.json
