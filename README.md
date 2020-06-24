@@ -33,6 +33,10 @@ List of options:
 --google-credential <file> | path to google credentials.json
 ``` 
 
+The tool currently onlys supports en and zh-Hans. Will support more in later phase. Please make sure you have the same column title as below for the sheet.
+
+<img width="357" alt="test_words_list_-_Google_表格" src="https://user-images.githubusercontent.com/9820374/85487813-dbf86b00-b5ff-11ea-8096-2a8c42e43f03.png">
+
 ## Example
 
 Let's say your wordings are kept at https://docs.google.com/spreadsheets/d/1Ik0mRByqVFldbAjDvrwGFx_CrM6-fsEKN0IzZnAr7rI/edit?usp=sharing
