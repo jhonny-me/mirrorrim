@@ -4,9 +4,11 @@ const path = require("path");
 
 const generateFilePath = (key) => {
   switch (key) {
+    case "EN":
     case "en":
     case "english":
-      return "values-en/strings.xml";
+      return "values/strings.xml";
+    case "ZH":
     case "zh":
     case "cn":
     case "chinese":
