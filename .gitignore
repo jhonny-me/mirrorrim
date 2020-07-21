@@ -118,3 +118,5 @@ dist
 # Custom
 token.json
 credentials.json
+resources/
+outputs/

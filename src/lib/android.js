@@ -20,7 +20,7 @@ const generateFilePath = (key) => {
 
 const generateFile = (data, basePath) => {
   const header = generateHeader();
-  const languages = Object.keys(data[0]).filter((k) => k !== "key");
+  const languages = Object.keys(data[0]).filter((k) => k !== "key" && k.length > 0);
   const generators = languages.map((l) => {
     const filepath = path.join(basePath, generateFilePath(l));
     const content = data.reduce((result, next) => {
