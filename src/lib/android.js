@@ -4,9 +4,11 @@ const path = require("path");
 
 const generateFilePath = (key) => {
   switch (key) {
+    case "EN":
     case "en":
     case "english":
-      return "values-en/strings.xml";
+      return "values/strings.xml";
+    case "ZH":
     case "zh":
     case "cn":
     case "chinese":
@@ -18,7 +20,7 @@ const generateFilePath = (key) => {
 
 const generateFile = (data, basePath) => {
   const header = generateHeader();
-  const languages = Object.keys(data[0]).filter((k) => k !== "key");
+  const languages = Object.keys(data[0]).filter((k) => k !== "key" && k.length > 0);
   const generators = languages.map((l) => {
     const filepath = path.join(basePath, generateFilePath(l));
     const content = data.reduce((result, next) => {

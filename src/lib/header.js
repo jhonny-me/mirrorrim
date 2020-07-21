@@ -3,7 +3,7 @@ const generateHeader = () => {
   const now = new Date().toString();
   var header = `// 
 // This is a generated file, DO NOT EDIT
-// See xxx
+// See https://github.com/jhonny-me/multi-language-mobile
 // Generated at ${now}
 //
 `;
