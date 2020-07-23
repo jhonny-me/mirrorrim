@@ -85,9 +85,8 @@ const getOptions = async (argv) => {
 };
 
 const formatKey = (key) => {
-  const removespace = key.replace(/[_ ]/g, "&&&");
-  const words = removespace.split("&&&").map((s) => s.toLowerCase());
-  return words.join("_");
+  const removespace = key.trim().toLowerCase().replace(/[!@#$%^&*() , .?'":{}|<>]+/g, "_");
+  return removespace;
 };
 
 const readFromCsv = (filepath) => {
@@ -97,10 +96,12 @@ const readFromCsv = (filepath) => {
       .pipe(csv())
       .on("data", (data) => {
         var { key } = data;
-        results.push({
-          ...data,
-          key: formatKey(key),
-        });
+        if (key && key.length > 0) {
+          results.push({
+            ...data,
+            key: formatKey(key),
+          });
+        }
       })
       .on("end", () => {
         results.sort((lhs, rhs) => lhs.key > rhs.key);
