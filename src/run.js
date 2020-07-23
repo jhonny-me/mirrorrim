@@ -1,4 +1,5 @@
 const { Command } = require("commander");
+const R = require("ramda");
 const { version } = require("../package.json");
 const csv = require("csv-parser");
 const fs = require("fs");
@@ -89,6 +90,8 @@ const formatKey = (key) => {
   return removespace;
 };
 
+const sortByKey = R.sortBy(R.prop('key'));
+
 const readFromCsv = (filepath) => {
   const results = [];
   return new Promise((resolve, reject) => {
@@ -104,8 +107,7 @@ const readFromCsv = (filepath) => {
         }
       })
       .on("end", () => {
-        results.sort((lhs, rhs) => lhs.key > rhs.key);
-        resolve(results);
+        resolve(sortByKey(results));
       })
       .on("error", (err) => {
         reject(err);
