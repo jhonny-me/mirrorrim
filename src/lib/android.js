@@ -19,7 +19,7 @@ const generateFilePath = (key) => {
 };
 
 const generateFile = (data, basePath) => {
-  const header = generateHeader();
+  const header = generateHeader.android();
   const languages = Object.keys(data[0]).filter((k) => k !== "key" && k.length > 0);
   const generators = languages.map((l) => {
     const filepath = path.join(basePath, generateFilePath(l));
