@@ -24,13 +24,21 @@ const generateFile = (data, basePath) => {
   const generators = languages.map((l) => {
     const filepath = path.join(basePath, generateFilePath(l));
     const content = data.reduce((result, next) => {
-      return result + `    <string name="${next.key}">${next[l]}</string>\n`;
+      const value = formatValue(next[l])
+      return result + `    <string name="${next.key}">${value}</string>\n`;
     }, "");
     const fullContent = `<resources>\n${content}\n</resources>`;
     return write(filepath, `${header}\n${fullContent}`);
   });
   return Promise.all(generators);
 };
+
+const formatValue = (input) => {
+  var input = input.replace(/'/g, '\\\'')
+  input = input.replace(/&/g, '&amp;')
+  input = input.replace(/"/g, '\\\"')
+  return input
+}
 
 module.exports = {
   generateFile,
