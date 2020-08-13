@@ -15,7 +15,7 @@ const DEFAULT_OPTIONS = {
   googleFileId: null,
   googleCredential: "./credentials.json",
 
-  outputDir: "./output",
+  outputDir: "./outputs",
   platforms: ["ios", "android"],
   config: ".multi-language",
 };
