@@ -14,7 +14,7 @@ const generateFilePath = (key) => {
     case "chinese":
       return "zh-Hans.lproj/Localizable.strings";
     default:
-      return "base.lproj/Localizable.strings";
+      return "";
   }
 };
 
@@ -22,12 +22,17 @@ const generateFile = (data, basePath) => {
   const header = generateHeader.ios();
   const languages = Object.keys(data[0]).filter((k) => k !== "key" && k.length > 0);
   const generators = languages.map((l) => {
-    const filepath = path.join(basePath, generateFilePath(l));
+    const filepath = generateFilePath(l);
+    if (filepath.length < 1) {
+      // unrecongnized language key, skip
+      return Promise.resolve()
+    }
+    const fullpath = path.join(basePath, filepath);
     const content = data.reduce((result, next) => {
       const value = formatValue(next[l]);
       return result + `"${next.key}" = "${value}";\n`;
     }, "");
-    return write(filepath, `${header}\n${content}`);
+    return write(fullpath, `${header}\n${content}`);
   });
   return Promise.all(generators);
 };
