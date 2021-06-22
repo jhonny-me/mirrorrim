@@ -1,6 +1,6 @@
 {
   "name": "multi-language-mobile",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Tool for generating localization files for iOS and Android",
   "main": "./src/index.js",
   "bin": {
