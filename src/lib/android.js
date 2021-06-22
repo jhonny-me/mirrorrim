@@ -14,7 +14,7 @@ const generateFilePath = (key) => {
     case "chinese":
       return "values-zh/strings.xml";
     default:
-      return "values/strings.xml";
+      return "";
   }
 };
 
@@ -22,13 +22,18 @@ const generateFile = (data, basePath) => {
   const header = generateHeader.android();
   const languages = Object.keys(data[0]).filter((k) => k !== "key" && k.length > 0);
   const generators = languages.map((l) => {
-    const filepath = path.join(basePath, generateFilePath(l));
+    const filepath = generateFilePath(l);
+    if (filepath.length < 1) {
+      // unrecongnized language key, skip
+      return Promise.resolve();
+    }
+    const fullpath = path.join(basePath, filepath);
     const content = data.reduce((result, next) => {
       const value = formatValue(next[l])
       return result + `    <string name="${next.key}">${value}</string>\n`;
     }, "");
     const fullContent = `<resources>\n${content}\n</resources>`;
-    return write(filepath, `${header}\n${fullContent}`);
+    return write(fullpath, `${header}\n${fullContent}`);
   });
   return Promise.all(generators);
 };
