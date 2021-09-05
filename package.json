@@ -1,6 +1,6 @@
 {
   "name": "multi-language-mobile",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Tool for generating localization files for iOS and Android",
   "main": "./src/index.js",
   "bin": {
@@ -38,25 +38,20 @@
     }
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
-    "auto-changelog": "^2.0.0",
-    "babel-eslint": "^10.0.3",
+    "auto-changelog": "^2.3.0",
+    "babel-eslint": "^10.1.0",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
-    "eslint": "^7.2.0",
-    "eslint-config-prettier": "^6.5.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^23.0.2",
-    "eslint-plugin-prettier": "^3.1.1",
-    "husky": "^4.2.5",
-    "jest": "^24.9.0",
-    "prettier": "^2.0.5"
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.3.2"
   },
   "dependencies": {
-    "commander": "^5.1.0",
-    "csv-parser": "^2.3.3",
-    "googleapis": "39",
-    "ramda": "^0.27.0",
+    "csv-parser": "^3.0.0",
+    "googleapis": "^85.0.0",
+    "ramda": "^0.27.1",
     "write": "^2.0.0"
   }
 }
