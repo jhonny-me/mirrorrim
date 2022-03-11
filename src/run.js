@@ -98,11 +98,12 @@ const readFromCsv = (filepath) => {
     fs.createReadStream(filepath)
       .pipe(csv())
       .on("data", (data) => {
-        var { key } = data;
-        if (key && key.length > 0) {
+        var { key, KEY, Key } = data;
+        const safeKey = key || KEY || Key;
+        if (safeKey && safeKey.length > 0) {
           results.push({
             ...data,
-            key: formatKey(key),
+            key: formatKey(safeKey),
           });
         }
       })

@@ -3,12 +3,10 @@ const write = require("write");
 const path = require("path");
 
 const generateFilePath = (key) => {
-  switch (key) {
-    case "EN":
+  switch (key.toLowerCase()) {
     case "en":
     case "english":
       return "values/strings.xml";
-    case "ZH":
     case "zh":
     case "cn":
     case "chinese":
