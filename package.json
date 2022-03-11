@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "csv-parser": "^3.0.0",
-    "googleapis": "^85.0.0",
+    "googleapis": "^96.0.0",
     "ramda": "^0.27.1",
     "write": "^2.0.0"
   }
