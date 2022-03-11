@@ -13,7 +13,7 @@ const DEFAULT_OPTIONS = {
   inputPath: null,
   // google
   googleFileId: null,
-  googleCredential: "./credentials.json",
+  googleCredential: "./public-credentials.json",
 
   outputDir: "./outputs",
   platforms: ["ios", "android"],
@@ -44,7 +44,7 @@ const getArrayOption = (optionArray, key) => {
 }
 
 const getOptions = async (argv) => {
-  const options = new Command()
+  let options = new Command()
     .option(
       "--output-dir <string>",
       `output file base directory, default: ${DEFAULT_OPTIONS.outputDir}`
@@ -80,7 +80,7 @@ const getOptions = async (argv) => {
     ...DEFAULT_OPTIONS,
     ...dotOptions,
     ...packageOptions,
-    ...options,
+    ...options._optionValues,
     platforms
   };
 };
@@ -98,11 +98,12 @@ const readFromCsv = (filepath) => {
     fs.createReadStream(filepath)
       .pipe(csv())
       .on("data", (data) => {
-        var { key } = data;
-        if (key && key.length > 0) {
+        var { key, KEY, Key } = data;
+        const safeKey = key || KEY || Key;
+        if (safeKey && safeKey.length > 0) {
           results.push({
             ...data,
-            key: formatKey(key),
+            key: formatKey(safeKey),
           });
         }
       })
@@ -116,7 +117,6 @@ const readFromCsv = (filepath) => {
 };
 
 const run = async (argv) => {
-  // const path = input || "./resources/test.csv";
   const options = await getOptions(argv);
   try {
     let path;
