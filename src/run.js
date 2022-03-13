@@ -17,10 +17,10 @@ const DEFAULT_OPTIONS = {
 
   outputDir: "./outputs",
   platforms: ["ios", "android"],
-  config: ".multi-language",
+  config: ".mirrorrim",
 };
 const PACKAGE_FILE = "package.json";
-const PACKAGE_OPTIONS_KEY = "multi-language";
+const PACKAGE_OPTIONS_KEY = "mirrorrim";
 
 const platformMap = {
   ios: ios,
