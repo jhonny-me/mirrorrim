@@ -1,6 +1,6 @@
 {
   "name": "mirrorrim",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Tool for generating localization files for iOS and Android",
   "main": "./src/index.js",
   "bin": {
@@ -22,7 +22,12 @@
   "bugs": {
     "url": "https://github.com/jhonny-me/mirrorrim/issues"
   },
-  "keywords": ["multi-language", "localization", "iOS", "Android"],
+  "keywords": [
+    "multi-language",
+    "localization",
+    "iOS",
+    "Android"
+  ],
   "lint-staged": {
     "*.{json,css,md}": [
       "prettier --write",
