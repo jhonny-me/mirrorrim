@@ -55,6 +55,7 @@
     "prettier": "^2.3.2"
   },
   "dependencies": {
+    "commander": "^9.0.0",
     "csv-parser": "^3.0.0",
     "googleapis": "^96.0.0",
     "ramda": "^0.27.1",
