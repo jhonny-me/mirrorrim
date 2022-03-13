@@ -1,6 +1,6 @@
 ## mirrorrim
 
-![我的项目 copy-min](https://user-images.githubusercontent.com/9820374/158046660-f9f4ae20-3e2b-437e-ac40-1955e3b3dd30.png)
+![Webp net-resizeimage](https://user-images.githubusercontent.com/9820374/158047850-fbc0b4b1-1d18-4c6b-962b-83084f66046f.png)
 
 This is a node app for generating iOS/Android localization files from local CSV or Google Sheet. You can consider this as a solution for maintainning multiple languages in iOS/Android platform btween developers and whoever updates the wordings.
 
