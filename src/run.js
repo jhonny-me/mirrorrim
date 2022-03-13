@@ -13,7 +13,7 @@ const DEFAULT_OPTIONS = {
   inputPath: null,
   // google
   googleFileId: null,
-  googleCredential: "./public-credentials.json",
+  googleCredential: "AIzaSyC-L0al8mmyplmsIu3Ko4CZBpJZ1PKfOUc",
 
   outputDir: "./outputs",
   platforms: ["ios", "android"],

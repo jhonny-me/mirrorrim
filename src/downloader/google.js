@@ -12,10 +12,16 @@ const DEFAULT_PATH = path.join(__dirname, "../../output");
 
 const downloadCsv = ({ destPath = DEFAULT_PATH, credentials, fileId }) => {
   const fullPath = path.join(destPath, outputFileName);
-  const auth = new google.auth.GoogleAuth({
-    keyFile: credentials,
-    scopes: SCOPES,
-  });
+  var auth;
+  if (credentials.endsWith('json')) {
+    auth = new google.auth.GoogleAuth({
+      keyFile: credentials,
+      scopes: SCOPES,
+    });
+  } else {
+    auth = credentials;
+  }
+  
   const drive = google.drive({ version: "v3", auth });
   return drive.files.export({
       fileId,
