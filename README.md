@@ -1,20 +1,48 @@
-## multi-language-mobile
-This is a node app for generating iOS/Android localization files from local CSV or Google Doc. You can consider this as a solution for maintainning multiple languages in iOS/Android platform btween developers and whoever updates the wordings.
+## mirrorrim
+
+![Webp net-resizeimage](https://user-images.githubusercontent.com/9820374/158047850-fbc0b4b1-1d18-4c6b-962b-83084f66046f.png)
+
+This is a node app for generating iOS/Android localization files from local CSV or Google Sheet. You can consider this as a solution for maintainning multiple languages in iOS/Android platform btween developers and whoever updates the wordings.
 
 ## Install
-Local(recommended): `yarn add multi-language-mobile --dev`
-Global: `yarn global add multi-language-mobile` or `npm install multi-language-mobile --global`
+Local(recommended): `yarn add mirrorrim --dev`
+Global: `yarn global add mirrorrim` or `npm install mirrorrim --global`
 
 ## Usage
 
-`multi-language --output-dir './outputs' --input-path './resources/test.csv'`
-
-Or, add `multi-language` in your package.json and run `multi-language` at your root folder
+### Manually
 
 ```
-"multi-language": {
+mirrorrim --output-dir './outputs' --input-path './resources/test.csv'
+```
+
+### Quick Test or Wordings are not sensitive
+
+Make sure you have your Google Sheet file shared as public read-only so mirrorrim can pull from Google.
+
+```
+mirrorrim --output-dir './outputs' --googleFileId 1Ik0mRByqVFldbAjDvrwGFx_CrM6-fsEKN0IzZnAr7rI
+```
+
+or add a `mirrorrim` section in your package.json and run `mirrorrim` at your root folder
+
+```
+"mirrorrim": {
+    "googleFileId": "1Ik0mRByqVFldbAjDvrwGFx_CrM6-fsEKN0IzZnAr7rI",
+    "outputDir": "./PATH_TO_YOUR_DEST",
+    "platforms": ["ios", "android"]
+  },
+```
+
+
+### Configured(recommended)
+
+add a `mirrorrim` section in your package.json and run `mirrorrim` at your root folder
+
+```
+"mirrorrim": {
     "googleCredential": "./google-credential.json",
-    "googleFileId": "13PRkyoSfdpRJhTlY8xtyX8jrXuhzAZmS1iPL2c9L8Ek",
+    "googleFileId": "1Ik0mRByqVFldbAjDvrwGFx_CrM6-fsEKN0IzZnAr7rI",
     "outputDir": "./PATH_TO_YOUR_DEST",
     "platforms": ["ios", "android"]
   },
@@ -41,13 +69,13 @@ The tool currently onlys supports en and zh-Hans. Will support more in later pha
 
 Let's say your wordings are kept at https://docs.google.com/spreadsheets/d/1Ik0mRByqVFldbAjDvrwGFx_CrM6-fsEKN0IzZnAr7rI/edit?usp=sharing
 
-You need to enable your google drive api at https://developers.google.com/drive/api/v3/quickstart/nodejs, make sure you enabled [read access](https://www.googleapis.com/auth/drive.readonly) for the project you created on Google console. Download the credentials and rename it as `google-credential.json`
+Follow the setup [here](https://github.com/jhonny-me/mirrorrim#How-to-setup-Google-Account) to get the `google-credential.json` file
 
 ### iOS
-After [install](https://github.com/jhonny-me/multi-language-mobile#install) at your project root folder, add following section to your package.json
+After [install](https://github.com/jhonny-me/mirrorrim#install) at your project root folder, add following section to your package.json
 
 ```
-"multi-language": {
+"mirrorrim": {
     "googleCredential": "./google-credential.json",
     "googleFileId": "1Ik0mRByqVFldbAjDvrwGFx_CrM6-fsEKN0IzZnAr7rI",
     "outputDir": "./PATH_TO_YOUR_DEST",
@@ -55,7 +83,7 @@ After [install](https://github.com/jhonny-me/multi-language-mobile#install) at y
   },
 ```
 
-And run `multi-language` at your project root folder. You can add the localization files from Xcode now.
+And run `mirrorrim` at your project root folder. You can add the localization files from Xcode now.
 
 ##### What's More For iOS?
 You can combine it with [R.swift](https://github.com/mac-cain13/R.swift), then use `R.string.localizable.alert_ok()` for localized string.
@@ -69,10 +97,10 @@ What about params? I got you covered: `R.string.localizable.count_number.localiz
 When you want to change language simply call `StringResource.language = "zh-Hans"`
 
 ### Android
-After [install](https://github.com/jhonny-me/multi-language-mobile#install) at your project root folder, add following section to your package.json
+After [install](https://github.com/jhonny-me/mirrorrim#install) at your project root folder, add following section to your package.json
 
 ```
-"multi-language": {
+"mirrorrim": {
     "googleCredential": "./google-credential.json",
     "googleFileId": "1Ik0mRByqVFldbAjDvrwGFx_CrM6-fsEKN0IzZnAr7rI",
     "outputDir": "./PATH_TO_YOUR_DEST",
@@ -80,4 +108,30 @@ After [install](https://github.com/jhonny-me/multi-language-mobile#install) at y
   },
 ```
 
-And run `multi-language` at your project root folder. You can add the localization files from your IDE now.
+And run `mirrorrim` at your project root folder. You can add the localization files from your IDE now.
+
+### How to setup Google Account
+
+#### create project and enable drive api
+1. Go to the [Google Developers Console](https://console.developers.google.com/)
+2. Select your project or create a new one (and then select it)
+3. Enable the Drive API for your project
+4. In the sidebar on the left, select APIs & Services > Library
+5. Search for "drive"
+6. Click on "Google Drive API"
+7. click the blue "Enable" button
+
+#### create service account and download the json credential
+1. In the sidebar on the left, select APIs & Services > Credentials
+2. Click blue "+ CREATE CREDENTIALS" and select "Service account" option
+3. Enter name, description, click "CREATE"
+4. You can skip permissions, click "CONTINUE"
+5. Click "+ CREATE KEY" button
+6. Select the "JSON" key type option
+7. Click "Create" button
+8. your JSON key file is generated and downloaded to your machine (it is the only copy!)
+9. click "DONE"
+10. rename the downloaded json to `google-credential.json`
+
+> Be careful - never check your API keys / secrets into version control (git)
+

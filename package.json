@@ -1,10 +1,10 @@
 {
-  "name": "multi-language-mobile",
-  "version": "1.0.1",
+  "name": "mirrorrim",
+  "version": "1.0.2",
   "description": "Tool for generating localization files for iOS and Android",
   "main": "./src/index.js",
   "bin": {
-    "multi-language": "./src/index.js"
+    "mirrorrim": "./src/index.js"
   },
   "author": "Johnny Gu <johnny@wiredcraft.com> (https://github.com/jhonny-me)",
   "license": "MIT",
@@ -14,14 +14,20 @@
     "start": "node src/index.js",
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },
-  "homepage": "https://github.com/jhonny-me/multi-language-mobile",
+  "homepage": "https://github.com/jhonny-me/mirrorrim",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jhonny-me/multi-language-mobile.git"
+    "url": "https://github.com/jhonny-me/mirrorrim.git"
   },
   "bugs": {
-    "url": "https://github.com/jhonny-me/multi-language-mobile/issues"
+    "url": "https://github.com/jhonny-me/mirrorrim/issues"
   },
+  "keywords": [
+    "multi-language",
+    "localization",
+    "iOS",
+    "Android"
+  ],
   "lint-staged": {
     "*.{json,css,md}": [
       "prettier --write",
@@ -50,7 +56,7 @@
   },
   "dependencies": {
     "csv-parser": "^3.0.0",
-    "googleapis": "^85.0.0",
+    "googleapis": "^96.0.0",
     "ramda": "^0.27.1",
     "write": "^2.0.0"
   }
