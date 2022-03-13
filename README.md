@@ -72,6 +72,9 @@ Let's say your wordings are kept at https://docs.google.com/spreadsheets/d/1Ik0m
 Follow the setup [here](https://github.com/jhonny-me/mirrorrim#How-to-setup-Google-Account) to get the `google-credential.json` file
 
 ### iOS
+
+Before you run this script, make sure you already have the `Localizable` file created and corresponding language enabled, otherwise you'll have to switch around manually.
+
 After [install](https://github.com/jhonny-me/mirrorrim#install) at your project root folder, add following section to your package.json
 
 ```

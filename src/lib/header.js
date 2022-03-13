@@ -3,7 +3,7 @@ const generateIosHeader = () => {
   const now = new Date().toString();
   var header = `// 
 // This is a generated file, DO NOT EDIT
-// See https://github.com/jhonny-me/multi-language-mobile
+// See https://github.com/jhonny-me/mirrorrim
 // Generated at ${now}
 //
 `;
@@ -15,7 +15,7 @@ const generateAndroidHeader = () => {
   var header = `
 <!--
 This is a generated file, DO NOT EDIT
-See https://github.com/jhonny-me/multi-language-mobile
+See https://github.com/jhonny-me/mirrorrim
 Generated at ${now}
 -->
 `;
