@@ -37,7 +37,7 @@ or add a `mirrorrim` section in your package.json and run `mirrorrim` at your ro
 
 ### Configured(recommended)
 
-add a `mirrorrim` section in your package.json and run `mirrorrim` at your root folder
+add a `mirrorrim` section in your package.json and run `yarn mirrorrim` at your root folder
 
 ```
 "mirrorrim": {
@@ -51,6 +51,8 @@ add a `mirrorrim` section in your package.json and run `mirrorrim` at your root 
 The output looks like
 
 <img width="275" alt="Cursor_and_Localizable_strings_—_outputs_en_lproj_—_multi-language-mobile" src="https://user-images.githubusercontent.com/9820374/85225517-899f2a80-b404-11ea-8ac2-ddd301ec5c77.png">
+
+If you see a 404 error, follow the setup [here](https://github.com/jhonny-me/mirrorrim#How-to-setup-Google-Account).
 
 List of options:
 ```
@@ -72,6 +74,9 @@ Let's say your wordings are kept at https://docs.google.com/spreadsheets/d/1Ik0m
 Follow the setup [here](https://github.com/jhonny-me/mirrorrim#How-to-setup-Google-Account) to get the `google-credential.json` file
 
 ### iOS
+
+Before you run this script, make sure you already have the `Localizable` file created and corresponding language enabled, otherwise you'll have to switch around manually.
+
 After [install](https://github.com/jhonny-me/mirrorrim#install) at your project root folder, add following section to your package.json
 
 ```
@@ -132,6 +137,8 @@ And run `mirrorrim` at your project root folder. You can add the localization fi
 8. your JSON key file is generated and downloaded to your machine (it is the only copy!)
 9. click "DONE"
 10. rename the downloaded json to `google-credential.json`
+11. add the generated bot user to your Google Sheet as a viewer, it can be found at the `client_email` at the downloaded json.
+
 
 > Be careful - never check your API keys / secrets into version control (git)
 
