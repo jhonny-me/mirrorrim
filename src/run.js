@@ -1,12 +1,11 @@
 const { Command } = require("commander");
-const R = require("ramda");
 const { version } = require("../package.json");
-const csv = require("csv-parser");
-const fs = require("fs");
 const ios = require("./lib/ios");
 const android = require("./lib/android");
 const google = require("./downloader/google");
+const plainUrl = require("./downloader/plainUrl");
 const readJson = require("./utils/readJson");
+const tokenParser = require("./utils/tokenParser");
 
 const DEFAULT_OPTIONS = {
   // local
@@ -85,37 +84,6 @@ const getOptions = async (argv) => {
   };
 };
 
-const formatKey = (key) => {
-  const removespace = key.trim().toLowerCase().replace(/[!@#$%^&*() , .?'":{}|<>]+/g, "_");
-  return removespace;
-};
-
-const sortByKey = R.sortBy(R.prop('key'));
-
-const readFromCsv = (filepath) => {
-  const results = [];
-  return new Promise((resolve, reject) => {
-    fs.createReadStream(filepath)
-      .pipe(csv())
-      .on("data", (data) => {
-        var { key, KEY, Key } = data;
-        const safeKey = key || KEY || Key;
-        if (safeKey && safeKey.length > 0) {
-          results.push({
-            ...data,
-            key: formatKey(safeKey),
-          });
-        }
-      })
-      .on("end", () => {
-        resolve(sortByKey(results));
-      })
-      .on("error", (err) => {
-        reject(err);
-      });
-  });
-};
-
 const run = async (argv) => {
   const options = await getOptions(argv);
   try {
@@ -123,7 +91,7 @@ const run = async (argv) => {
     if (options.inputPath) {
       path = options.inputPath;
     } else if (options.googleFileId) {
-      path = await google.downloadCsv({
+      path = await google.downloadCsv({ 
         destPath: options.outputDir,
         credentials: options.googleCredential,
         fileId: options.googleFileId,
@@ -135,7 +103,7 @@ const run = async (argv) => {
         `);
       process.exit();
     }
-    const array = await readFromCsv(path);
+    const array = await tokenParser.parse(path);
     const platforms = options.platforms;
     for (var i = 0; i < platforms.length; i++) {
       const generator = platformMap[platforms[i]];

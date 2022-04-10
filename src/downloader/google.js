@@ -7,7 +7,7 @@ const SCOPES = [
   "https://www.googleapis.com/auth/drive.readonly",
 ];
 
-const outputFileName = "google.csv";
+const outputFileName = "download.csv";
 const DEFAULT_PATH = path.join(__dirname, "../../output");
 
 const downloadCsv = ({ destPath = DEFAULT_PATH, credentials, fileId }) => {
