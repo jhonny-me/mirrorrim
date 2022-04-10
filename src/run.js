@@ -9,7 +9,7 @@ const tokenParser = require("./utils/tokenParser");
 
 const DEFAULT_OPTIONS = {
   // local
-  inputPath: null,
+  filePath: null,
   // google
   googleFileId: null,
   googleCredential: "AIzaSyC-L0al8mmyplmsIu3Ko4CZBpJZ1PKfOUc",
@@ -56,8 +56,8 @@ const getOptions = async (argv) => {
     )
     // .option('--downloader <string>', `downloader for input, default: ${DEFAULT_OPTIONS.downloader}`)
     .option(
-      "--input-path <file>",
-      `file for local csv input, default: ${DEFAULT_OPTIONS.inputPath}`
+      "--file-path <file>",
+      `file for local csv input, default: ${DEFAULT_OPTIONS.filePath}`
     )
     .option(
       "--google-file-id <string>",
@@ -88,8 +88,8 @@ const run = async (argv) => {
   const options = await getOptions(argv);
   try {
     let path;
-    if (options.inputPath) {
-      path = options.inputPath;
+    if (options.filePath) {
+      path = options.filePath;
     } else if (options.googleFileId) {
       path = await google.downloadCsv({ 
         destPath: options.outputDir,
@@ -98,7 +98,7 @@ const run = async (argv) => {
       });
     } else {
       console.log(`Error: To run this app, you need one of these:
-  - path to local csv with input-path param
+  - path to local csv with file-path param
   - google file id with google-file-id param
         `);
       process.exit();
