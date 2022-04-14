@@ -17,8 +17,12 @@ const readFromCsv = (filepath) => {
     fs.createReadStream(filepath)
       .pipe(csv())
       .on("data", (data) => {
+        var data = JSON.parse(JSON.stringify(data))
+        console.log(data)
+        console.log(Object.keys(data))
         var { key, KEY, Key } = data;
         const safeKey = key || KEY || Key;
+        console.log(safeKey)
         if (safeKey && safeKey.length > 0) {
           results.push({
             ...data,
@@ -27,6 +31,7 @@ const readFromCsv = (filepath) => {
         }
       })
       .on("end", () => {
+        console.log(results, filepath);
         resolve(sortByKey(results));
       })
       .on("error", (err) => {
@@ -38,7 +43,7 @@ const readFromCsv = (filepath) => {
 const convertToCsv = (filepath) => {
   const fileExtension = path.extname(filepath);
   const dirname = path.dirname(filepath);
-  const basename = path.basename(filepath, "xlsx"); 
+  const basename = path.basename(filepath, ".xlsx"); 
   console.log(filepath, fileExtension, dirname, basename)
   if(fileExtension === ".csv") { 
     return Promise.resolve(filepath); 
