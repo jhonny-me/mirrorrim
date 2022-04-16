@@ -1,13 +1,13 @@
 const { google } = require("googleapis");
 const path = require("path");
-const write = require("write");
+const fs = require("fs");
 
 const SCOPES = [
   "https://www.googleapis.com/auth/drive.file",
   "https://www.googleapis.com/auth/drive.readonly",
 ];
 
-const outputFileName = "google.csv";
+const outputFileName = "download.xlsx";
 const DEFAULT_PATH = path.join(__dirname, "../../output");
 
 const downloadCsv = ({ destPath = DEFAULT_PATH, credentials, fileId }) => {
@@ -23,12 +23,28 @@ const downloadCsv = ({ destPath = DEFAULT_PATH, credentials, fileId }) => {
   }
   
   const drive = google.drive({ version: "v3", auth });
-  return drive.files.export({
+  return new Promise((resolve, reject) => {
+    drive.files.export({
       fileId,
-      mimeType: "text/csv"
+      mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    }, {responseType: "stream"}, (err, {data}) => {
+      if (err) {
+        reject(err);
+      }
+      var dest = fs.createWriteStream(fullPath);
+      data
+        .on("end", () => {
+          // wait 1s for the file to create.
+          setTimeout(() => {
+            resolve(fullPath);
+          }, 1000);
+        })
+        .on("error", (err) => {
+          reject(err)
+        })
+        .pipe(dest);
     })
-    .then(({ data }) => write(fullPath, data))
-    .then(() => Promise.resolve(fullPath));
+  });
 };
 
 module.exports = {

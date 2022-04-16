@@ -1,16 +1,15 @@
 const { Command } = require("commander");
-const R = require("ramda");
 const { version } = require("../package.json");
-const csv = require("csv-parser");
-const fs = require("fs");
 const ios = require("./lib/ios");
 const android = require("./lib/android");
 const google = require("./downloader/google");
+const plainUrl = require("./downloader/plainUrl");
 const readJson = require("./utils/readJson");
+const tokenParser = require("./utils/tokenParser");
 
 const DEFAULT_OPTIONS = {
   // local
-  inputPath: null,
+  filePath: null,
   // google
   googleFileId: null,
   googleCredential: "AIzaSyC-L0al8mmyplmsIu3Ko4CZBpJZ1PKfOUc",
@@ -57,8 +56,8 @@ const getOptions = async (argv) => {
     )
     // .option('--downloader <string>', `downloader for input, default: ${DEFAULT_OPTIONS.downloader}`)
     .option(
-      "--input-path <file>",
-      `file for local csv input, default: ${DEFAULT_OPTIONS.inputPath}`
+      "--file-path <file>",
+      `file for local csv input, default: ${DEFAULT_OPTIONS.filePath}`
     )
     .option(
       "--google-file-id <string>",
@@ -85,57 +84,29 @@ const getOptions = async (argv) => {
   };
 };
 
-const formatKey = (key) => {
-  const removespace = key.trim().toLowerCase().replace(/[!@#$%^&*() , .?'":{}|<>]+/g, "_");
-  return removespace;
-};
-
-const sortByKey = R.sortBy(R.prop('key'));
-
-const readFromCsv = (filepath) => {
-  const results = [];
-  return new Promise((resolve, reject) => {
-    fs.createReadStream(filepath)
-      .pipe(csv())
-      .on("data", (data) => {
-        var { key, KEY, Key } = data;
-        const safeKey = key || KEY || Key;
-        if (safeKey && safeKey.length > 0) {
-          results.push({
-            ...data,
-            key: formatKey(safeKey),
-          });
-        }
-      })
-      .on("end", () => {
-        resolve(sortByKey(results));
-      })
-      .on("error", (err) => {
-        reject(err);
-      });
-  });
-};
-
 const run = async (argv) => {
   const options = await getOptions(argv);
   try {
     let path;
-    if (options.inputPath) {
-      path = options.inputPath;
+    if (options.filePath) {
+      path = await plainUrl.downloadFile({
+        destPath: options.outputDir,
+        downloadUrl: options.filePath
+      })
     } else if (options.googleFileId) {
-      path = await google.downloadCsv({
+      path = await google.downloadCsv({ 
         destPath: options.outputDir,
         credentials: options.googleCredential,
         fileId: options.googleFileId,
       });
     } else {
       console.log(`Error: To run this app, you need one of these:
-  - path to local csv with input-path param
+  - path to local/remote xlsx with file-path param
   - google file id with google-file-id param
         `);
       process.exit();
     }
-    const array = await readFromCsv(path);
+    const array = await tokenParser.parse(path);
     const platforms = options.platforms;
     for (var i = 0; i < platforms.length; i++) {
       const generator = platformMap[platforms[i]];
