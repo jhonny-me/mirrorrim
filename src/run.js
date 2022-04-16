@@ -89,7 +89,10 @@ const run = async (argv) => {
   try {
     let path;
     if (options.filePath) {
-      path = options.filePath;
+      path = await plainUrl.downloadFile({
+        destPath: options.outputDir,
+        downloadUrl: options.filePath
+      })
     } else if (options.googleFileId) {
       path = await google.downloadCsv({ 
         destPath: options.outputDir,
@@ -98,7 +101,7 @@ const run = async (argv) => {
       });
     } else {
       console.log(`Error: To run this app, you need one of these:
-  - path to local csv with file-path param
+  - path to local/remote xlsx with file-path param
   - google file id with google-file-id param
         `);
       process.exit();
