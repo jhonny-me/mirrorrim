@@ -1,6 +1,6 @@
 {
   "name": "mirrorrim",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Tool for generating localization files for iOS and Android",
   "main": "./src/index.js",
   "bin": {
@@ -59,6 +59,7 @@
     "commander": "^9.0.0",
     "googleapis": "^96.0.0",
     "ramda": "^0.27.1",
+    "write": "^2.0.0",
     "xlsx": "^0.18.5"
   }
 }
