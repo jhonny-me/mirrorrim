@@ -4,7 +4,8 @@
   "description": "Tool for generating localization files for iOS and Android",
   "main": "./src/index.js",
   "bin": {
-    "mirrorrim": "./src/index.js"
+    "mirrorrim": "./src/index.js",
+    "migration": "./src/migration.js"
   },
   "author": "Johnny Gu <johnny@wiredcraft.com> (https://github.com/jhonny-me)",
   "license": "MIT",
