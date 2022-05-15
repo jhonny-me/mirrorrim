@@ -30,11 +30,11 @@ const read = async (filepath, languageKey) => {
 
 const formatValue = (input) => {
   var input = String(input)
-  var input = input.replace(/\\\\'/g, '\'')
-  input = input.replace(/&amp;amp;/g, '&')
-  input = input.replace(/\\\\"/g, '\"')
-  input = input.replace(/&amp;lt;/g, '<')
-  input = input.replace(/&amp;gt;/g, '>')
+  var input = input.replace(/(\\\\'|\\')/g, '\'')
+  input = input.replace(/(&amp;amp;|&amp;)/g, '&')
+  input = input.replace(/(\\\\"|\\\")/g, '\"')
+  input = input.replace(/(&amp;lt;|&lt;)/g, '<')
+  input = input.replace(/(&amp;gt;|&gt;)/g, '>')
   return input
 }
 
