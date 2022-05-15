@@ -39,6 +39,7 @@ const generateFile = (data, basePath) => {
 const formatValue = (input) => {
   var input = String(input)
   var input = input.replace(/'/g, '\\\'')
+  input = input.replace(/(\r\n|\r|\n)/g, "") // remove breakline
   input = input.replace(/&/g, '&amp;')
   input = input.replace(/"/g, '\\\"')
   input = input.replace(/</g, '&lt;')
