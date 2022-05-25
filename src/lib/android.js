@@ -36,7 +36,7 @@ const generateFile = (data, basePath) => {
         return result;
       }
     }, "");
-    const fullContent = `<resources>\n${content}\n</resources>`;
+    const fullContent = `<resources>\n${content}</resources>`;
     return write(fullpath, `${header}\n${fullContent}`);
   });
   return Promise.all(generators);
