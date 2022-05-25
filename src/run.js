@@ -6,6 +6,7 @@ const google = require("./downloader/google");
 const plainUrl = require("./downloader/plainUrl");
 const readJson = require("./utils/readJson");
 const tokenParser = require("./utils/tokenParser");
+const fs = require('fs');
 
 const DEFAULT_OPTIONS = {
   // local
@@ -94,7 +95,7 @@ const run = async (argv) => {
         downloadUrl: options.filePath
       })
     } else if (options.googleFileId) {
-      path = await google.downloadCsv({ 
+      path = await google.downloadFile({ 
         destPath: options.outputDir,
         credentials: options.googleCredential,
         fileId: options.googleFileId,
@@ -103,6 +104,7 @@ const run = async (argv) => {
       console.log(`Error: To run this app, you need one of these:
   - path to local/remote xlsx with file-path param
   - google file id with google-file-id param
+
         `);
       process.exit();
     }
@@ -112,6 +114,12 @@ const run = async (argv) => {
       const generator = platformMap[platforms[i]];
       if (!generator) continue;
       await generator.generateFile(array, options.outputDir);
+    }
+    // delete downloaded google sheet
+    if (options.googleFileId) {
+      fs.unlink(path, err => {
+        // Don't care if the delete fails
+      })
     }
   } catch (err) {
     console.log(err);

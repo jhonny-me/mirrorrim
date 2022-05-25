@@ -10,7 +10,7 @@ const SCOPES = [
 const outputFileName = "download.xlsx";
 const DEFAULT_PATH = path.join(__dirname, "../../output");
 
-const downloadCsv = ({ destPath = DEFAULT_PATH, credentials, fileId }) => {
+const downloadFile = ({ destPath = DEFAULT_PATH, credentials, fileId }) => {
   const fullPath = path.join(destPath, outputFileName);
   var auth;
   if (credentials.endsWith('json')) {
@@ -48,5 +48,5 @@ const downloadCsv = ({ destPath = DEFAULT_PATH, credentials, fileId }) => {
 };
 
 module.exports = {
-  downloadCsv,
+  downloadFile,
 };

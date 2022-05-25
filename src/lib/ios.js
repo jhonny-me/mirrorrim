@@ -1,6 +1,7 @@
 const generateHeader = require("./header");
 const write = require("write");
 const path = require("path");
+const keyExtractor = require('./keysExtractor');
 
 const generateFilePath = (key) => {
   switch (key.toLowerCase()) {
@@ -18,7 +19,7 @@ const generateFilePath = (key) => {
 
 const generateFile = (data, basePath) => {
   const header = generateHeader.ios();
-  const languages = Object.keys(data[0]).filter((k) => k !== "key" && k.length > 0);
+  const languages = keyExtractor(data);
   const generators = languages.map((l) => {
     const filepath = generateFilePath(l);
     if (filepath.length < 1) {
@@ -27,8 +28,13 @@ const generateFile = (data, basePath) => {
     }
     const fullpath = path.join(basePath, filepath);
     const content = data.reduce((result, next) => {
-      const value = formatValue(next[l]);
-      return result + `"${next.key}" = "${value}";\n`;
+      const rawValue = next[l]
+      if (rawValue) {
+        const value = formatValue(rawValue);
+        return result + `"${next.key}" = "${value}";\n`;  
+      } else { // value missing, skipping this key
+        return result;
+      }
     }, "");
     return write(fullpath, `${header}\n${content}`);
   });
