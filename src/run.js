@@ -4,6 +4,7 @@ const ios = require("./lib/ios");
 const android = require("./lib/android");
 const google = require("./downloader/google");
 const plainUrl = require("./downloader/plainUrl");
+const tencent = require("./downloader/tencent");
 const readJson = require("./utils/readJson");
 const tokenParser = require("./utils/tokenParser");
 const fs = require('fs');
@@ -14,6 +15,9 @@ const DEFAULT_OPTIONS = {
   // google
   googleFileId: null,
   googleCredential: "AIzaSyC-L0al8mmyplmsIu3Ko4CZBpJZ1PKfOUc",
+  // tencent
+  tencentFileId: null,
+  tencentHost: "https://api.mirrorrim.cn",
 
   outputDir: "./outputs",
   platforms: ["ios", "android"],
@@ -68,6 +72,19 @@ const getOptions = async (argv) => {
       "--google-credential <file>",
       `file for google credentials, default: ${DEFAULT_OPTIONS.googleCredential}`
     )
+    .option(
+      "--tencent-file-id <string>",
+      "tencent file id, you can find it in the url"
+    )
+    .option(
+      "--tencent-host <string>",
+      `tencent service url, default: ${DEFAULT_OPTIONS.tencentHost}, ONLY modify if you have a self-hosted service, see https://github.com/jhonny-me/mirrorrim_serverless for HOWTOs`
+    )
+    // TODO: Instruction for how to generate tencent user token
+    .option(
+      "--tencent-token <string>",
+      `user token for tencent credentials, how to generate? Follow: xxxx`
+    )
     .version(version)
     .parse(argv);
 
@@ -100,11 +117,13 @@ const run = async (argv) => {
         credentials: options.googleCredential,
         fileId: options.googleFileId,
       });
+    } else if (options.tencentFileId && options.tencentToken) {
+      path = await tencent.downloadFile(options.outputDir, options);
     } else {
       console.log(`Error: To run this app, you need one of these:
   - path to local/remote xlsx with file-path param
   - google file id with google-file-id param
-
+  - tencent file id with tencent-file-id param and tencent token configured
         `);
       process.exit();
     }
