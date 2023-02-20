@@ -22,7 +22,13 @@ Generated at ${now}
   return header;
 }
 
+const generateFlutterHeader = () => {
+  //flutter localization file can't input comment
+  return '';
+}
+
 module.exports = {
   ios: generateIosHeader,
-  android: generateAndroidHeader
+  android: generateAndroidHeader,
+  flutter: generateFlutterHeader
 };

@@ -2,6 +2,7 @@ const { Command } = require("commander");
 const { version } = require("../package.json");
 const ios = require("./lib/ios");
 const android = require("./lib/android");
+const flutter = require("./lib/flutter");
 const google = require("./downloader/google");
 const plainUrl = require("./downloader/plainUrl");
 const readJson = require("./utils/readJson");
@@ -16,7 +17,7 @@ const DEFAULT_OPTIONS = {
   googleCredential: "AIzaSyC-L0al8mmyplmsIu3Ko4CZBpJZ1PKfOUc",
 
   outputDir: "./outputs",
-  platforms: ["ios", "android"],
+  platforms: ["ios", "android", "flutter"],
   config: ".mirrorrim",
 };
 const PACKAGE_FILE = "package.json";
@@ -25,6 +26,7 @@ const PACKAGE_OPTIONS_KEY = "mirrorrim";
 const platformMap = {
   ios: ios,
   android: android,
+  flutter: flutter
 };
 
 const collect = (value, previous) => {
