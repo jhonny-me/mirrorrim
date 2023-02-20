@@ -115,6 +115,29 @@ After [install](https://github.com/jhonny-me/mirrorrim#install) at your project 
 
 And run `mirrorrim` at your project root folder. You can add the localization files from your IDE now.
 
+### Flutter
+Before you run this script, make sure you had installed `Flutter Intl` plugin，you can find it from `VSCode` or `Android Studio`.
+And you also need install [`flutter_localization`](https://pub.dev/packages/flutter_localization) dependency in your flutter project
+
+1. use `Flutter Intl` plugin to initial
+2. use `Flutter Intl`  to add local(default is only en, you can add what you needed)
+
+```
+"mirrorrim": {
+    "googleCredential": "./google-credential.json",
+    "googleFileId": "1Ik0mRByqVFldbAjDvrwGFx_CrM6-fsEKN0IzZnAr7rI",
+    "outputDir": "./PATH_TO_YOUR_DEST",
+    "platforms": ["android"]
+  },
+```
+
+And run `mirrorrim` at your project root folder. You can add the localization files from your project now.
+
+you can use `S.current.#key` to get the localized value
+
+when you run `mirrorrim` to update the localizetion, `Flutter Intl` will takes some time to re-generate some code, just need wait for a moment
+
+
 ### How to setup Google Account
 
 #### create project and enable drive api
